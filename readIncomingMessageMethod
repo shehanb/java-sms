@@ -1,0 +1,34 @@
+ public void readLastRecievedMessage(final String modem, final String port, final int bitrate, final String donglenum) throws SMSLibException, TimeoutException, GatewayException, IOException, InterruptedException{
+           new Thread(new Runnable() {
+          
+            public void run() {
+           try
+                {
+                    System.out.println(modem + port + bitrate + reciepent + donglenum );
+                        List<InboundMessage> msgList;
+                        SerialModemGateway gateway = new SerialModemGateway(modem, port, bitrate, "", "");
+                        gateway.setProtocol(AGateway.Protocols.PDU);
+                        gateway.setInbound(true);
+                        gateway.setOutbound(true);
+                        gateway.setSimPin("0000");
+                        String status = Service.getInstance().getServiceStatus().toString();
+                        if(status=="STARTED"){}else{
+                            Service.getInstance().addGateway(gateway);
+                            Service.getInstance().startService();
+                        }
+                        Service.getInstance().getKeyManager().registerKey(donglenum, new AESKey(new SecretKeySpec("0011223344556677".getBytes(), "AES")));
+                        msgList = new ArrayList<InboundMessage>();
+                        Service.getInstance().readMessages(msgList, InboundMessage.MessageClasses.ALL);
+                        //get the last recieved message
+                        int i = (msgList.size())-1;
+                        System.out.println(msgList.get(i).getText());
+                }
+                catch (Exception e)
+                {
+                    
+                        e.printStackTrace();
+                }
+           
+               }
+                }).start();
+       }
