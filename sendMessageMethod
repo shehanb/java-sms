@@ -1,4 +1,4 @@
- public void SendMobileVerification(final String modem, final String port, final int bitrate,final String reciepent,final String content) throws Exception
+ public void SendMessage(final String modem, final String port, final int bitrate,final String reciepent,final String content) throws Exception
         {
             new Thread(new Runnable() {
           
