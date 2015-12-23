@@ -1,0 +1,26 @@
+ public void SendMobileVerification(final String modem, final String port, final int bitrate,final String reciepent,final String content) throws Exception
+        {
+            new Thread(new Runnable() {
+          
+            public void run() {
+              try{  
+                SerialModemGateway gateway = new SerialModemGateway(modem, port, bitrate , "", "");
+                gateway.setInbound(true);
+                gateway.setOutbound(true);
+                String status = Service.getInstance().getServiceStatus().toString();
+                if(status=="STARTED"){}
+                else{
+                Service.getInstance().addGateway(gateway);
+                Service.getInstance().startService();}
+                OutboundMessage msg = new OutboundMessage(reciepent, content);
+                boolean i =Service.getInstance().sendMessage(msg);
+               if(i==false){
+                   JOptionPane.showMessageDialog(null, "Failed to Send Message, \nConfigure Settings \nRestart System \nRetry"); 
+                 }else{JOptionPane.showMessageDialog(null, "Message Sent");
+                      }
+               }catch (Exception e)
+                {
+                        e.printStackTrace();
+                }}
+                }).start();
+        }
