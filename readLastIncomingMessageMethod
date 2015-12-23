@@ -4,7 +4,6 @@
             public void run() {
            try
                 {
-                    System.out.println(modem + port + bitrate + reciepent + donglenum );
                         List<InboundMessage> msgList;
                         SerialModemGateway gateway = new SerialModemGateway(modem, port, bitrate, "", "");
                         gateway.setProtocol(AGateway.Protocols.PDU);
@@ -21,6 +20,7 @@
                         Service.getInstance().readMessages(msgList, InboundMessage.MessageClasses.ALL);
                         //get the last recieved message
                         int i = (msgList.size())-1;
+                        //print the message
                         System.out.println(msgList.get(i).getText());
                 }
                 catch (Exception e)
