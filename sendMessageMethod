@@ -12,6 +12,13 @@
                 else{
                 Service.getInstance().addGateway(gateway);
                 Service.getInstance().startService();}
+                System.out.println("Modem Information:");
+                System.out.println("  Manufacturer: " + gateway.getManufacturer());
+                System.out.println("  Model: " + gateway.getModel());
+                System.out.println("  Serial No: " + gateway.getSerialNo());
+                System.out.println("  SIM IMSI: " + gateway.getImsi());
+                System.out.println("  Signal Level: " + gateway.getSignalLevel() + " dBm");
+                System.out.println("  Battery Level: " + gateway.getBatteryLevel() + "%");
                 OutboundMessage msg = new OutboundMessage(reciepent, content);
                 boolean i =Service.getInstance().sendMessage(msg);
                if(i==false){
